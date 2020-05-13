@@ -59,10 +59,26 @@ void test_add_to_start(void) {
   printf("passed...\n");
 }
 
+void test_insert_at(void){
+  printf("\ntesting insert_at\n");
+  List_ptr list = create_list();
+  int a = 5;
+  printf("\t should have one element while list is empty and the value is inserted in 0th position\n");
+  assert(insert_at(list, &a, 0));
+  assert(list->length == 1);
+  assert(*(int *) list->first->element == 5);
+  printf("passed...\n");
+
+  int b = 3;
+  printf("\t should not be able to insert value in a invalid position\n");
+  assert(insert_at(list, &b ,11) == 0);
+  printf("passed...\n");
+}
 
 int main(void)
 {
   test_add_to_list();
   test_add_to_start();
+  test_insert_at();
   return 0;
 }

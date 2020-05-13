@@ -8,6 +8,15 @@ Node_ptr create_node(Element data) {
   return new_node;
 }
 
+Node_ptr get_node(List_ptr list, int position) {
+  Node_ptr p_walk = list->first;
+  for(int i = 0; i < position; i++)
+  {
+    p_walk = p_walk->next;
+  }
+  return p_walk;
+}
+
 List_ptr create_list(void) {
   List_ptr new_list = malloc(sizeof(LinkedList));
   new_list->first = NULL;
@@ -44,5 +53,26 @@ Status add_to_start(List_ptr list, Element element) {
     list->first->next = temp;
   }
   list->length += 1;
+  return Success;
+}
+
+Status insert_at(List_ptr list, Element element, int position) {
+  if(position > list->length || position < 0) {
+    return Failure;
+  }
+  if(position == 0) {
+    return add_to_start(list, element);
+  }
+  if (position == list->length)
+  {
+    return add_to_list(list,element);
+  }
+  
+  Node_ptr above_node = get_node(list, position - 1);
+  Node_ptr new_node = create_node(element);
+  Node_ptr temp = above_node->next;
+  new_node->next = temp;
+  above_node->next = new_node;
+  list->length++;
   return Success;
 }
