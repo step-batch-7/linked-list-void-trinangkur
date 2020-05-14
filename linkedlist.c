@@ -174,3 +174,28 @@ Element remove_at(List_ptr list, int position) {
   list->length--;
   return temp;
 }
+
+Element remove_first_occurrence(List_ptr list, Element element, Matcher matcher) {
+  if (list->length == 0) {
+    return NULL;
+  }
+  if (matcher(list->first->element, element)) {
+    return remove_from_start(list);
+  }
+
+  Node_ptr p_walk = list->first;
+  for (int i = 1; i < list->length - 1; i++) {
+    if (matcher(p_walk->next->element, element)) {
+      Node_ptr temp = p_walk->next;
+      p_walk->next = temp->next;
+      list->length--;
+      return temp;
+    }
+    p_walk = p_walk->next;
+  }
+
+  if (matcher(list->last->element, element)) {
+    return remove_from_end(list);
+  }
+  return NULL;
+}

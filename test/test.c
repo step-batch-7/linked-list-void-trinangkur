@@ -19,6 +19,10 @@ void * sum_using_ref(void *a, void *b) {
   return c;
 }
 
+Status compare_int(void *a, void *b) {
+  return *(int *) a == *(int *) b;
+}
+
 void test_add_to_list(void) {
   printf("\ntesting add_to_end\n");
   List_ptr list = create_list();
@@ -225,6 +229,38 @@ void test_remove_at(void) {
   printf("passed...\n");
 }
 
+void test_remove_first_occurrence(void) {
+  printf("\ntesting remove_first_occurrence\n");
+  List_ptr list = create_list();
+  int a = 5;
+  int b = 5;
+  add_to_list(list, &a);
+  add_to_list(list, &b);
+  printf("\tShould remove first match only\n");
+  int c = 5;
+  assert(remove_first_occurrence(list, &c, compare_int));
+  assert(list->length== 1);
+  assert(*(int *) list->first->element == 5);
+  assert(*(int *) list->last->element == 5);
+  printf("passed...\n");
+
+  printf("\tShould not able to remove if no matches exist\n");
+  int d = 1;
+  assert(remove_first_occurrence(list, &d, compare_int) == NULL);
+  assert(list->length == 1);
+  assert(*(int *) list->first->element == 5);
+  assert(*(int *) list->last->element == 5);
+  printf("passed...\n");
+
+  printf("\tShould remove all elements while matching with only element in list\n");
+  int e = 5;
+  assert(remove_first_occurrence(list, &e, compare_int));
+  assert(list->length == 0);
+  assert(list->first == NULL);
+  assert(list->last == NULL);
+  printf("passed...\n");
+}
+
 int main(void)
 {
   test_add_to_list();
@@ -237,5 +273,6 @@ int main(void)
   test_remove_from_start();
   test_remove_from_end();
   test_remove_at();
+  test_remove_first_occurrence();
   return 0;
 }
