@@ -9,6 +9,10 @@ void *increment (void *a) {
   return b;
 }
 
+Status is_less_than_5 (void *a) {
+  return *(int *)a < 5;
+}
+
 void test_add_to_list(void) {
   printf("\ntesting add_to_end\n");
   List_ptr list = create_list();
@@ -100,7 +104,7 @@ void test_reverse(void) {
 }
 
 void test_map(void) {
-  printf("\ntesting reverse\n");
+  printf("\ntesting map\n");
   List_ptr list = create_list();
   int a = 5;
   int b = 3;
@@ -118,6 +122,24 @@ void test_map(void) {
   printf("passed...\n");
 }
 
+void test_filter(void) {
+  printf("\ntesting filter\n");
+  List_ptr list = create_list();
+  int a = 5;
+  int b = 3;
+  add_to_list(list, &a);
+  add_to_list(list, &b);
+  List_ptr another_list = filter(list,is_less_than_5);
+  printf("\t should filter elements which are less than 5\n");
+  Node_ptr p_walk = another_list->first;
+  while (p_walk != NULL) {
+    assert(*(int *)p_walk->element < 5);
+    p_walk = p_walk->next;
+  }
+  assert(another_list->length == 1);
+  printf("passed...\n");
+}
+
 int main(void)
 {
   test_add_to_list();
@@ -125,5 +147,6 @@ int main(void)
   test_insert_at();
   test_reverse();
   test_map();
+  test_filter();
   return 0;
 }
