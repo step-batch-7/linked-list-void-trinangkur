@@ -221,3 +221,17 @@ Status add_unique(List_ptr list, Element element, Matcher matcher) {
   }
   return add_to_list(list,element);
 }
+
+Status clear_list(List_ptr list) {
+  Node_ptr p_walk = list->first;
+  while (p_walk != NULL)
+  {
+    Node_ptr temp = p_walk;
+    p_walk = temp->next;
+    free(temp);
+  }
+  list->first = NULL;
+  list->last = NULL;
+  list->length = 0;
+  return Success;
+}
