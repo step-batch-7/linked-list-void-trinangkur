@@ -202,12 +202,28 @@ Element remove_first_occurrence(List_ptr list, Element element, Matcher matcher)
 
 List_ptr remove_all_occurrences(List_ptr list, Element element, Matcher matcher) {
   List_ptr new_list = create_list();
+  if (list->length == 0) {
+    return new_list;
+  }
+
   Node_ptr p_walk = list->first;
-  while (p_walk != NULL) {
-    if (!matcher(p_walk->element, element)) {
-      add_to_list(new_list, p_walk->element);
+  int i = 1;
+  while(i < list->length - 1) {
+    if (matcher(p_walk->next->element, element)) {
+      Node_ptr temp = p_walk->next;
+      p_walk->next = temp->next;
+      list->length--;
+      add_to_list(new_list,temp->element);
+    }else {
+      p_walk = p_walk->next;
+      i++;
     }
-    p_walk = p_walk->next;
+  }
+  if (matcher(list->first->element, element)) {
+    add_to_start(new_list,remove_from_start(list));
+  }
+  if (list->length != 0 && matcher(list->last->element, element)) {
+    add_to_list(new_list,remove_from_end(list));
   }
   return new_list;
 }

@@ -279,22 +279,29 @@ void test_remove_all_occurrence(void) {
   add_to_list(list, &y);
   add_to_list(list, &z);
 
-  printf("\tShould get every element if nothing mathes\n");
+  printf("\tShould get empty list if nothing matches\n");
 
   int a = 0;
 
   List_ptr new_list = remove_all_occurrences(list, &a, compare_int);
-  assert(new_list->length == 3);
-  assert(* (int *) new_list->first->element == 5);
-  assert(* (int *) new_list->last->element == 3);
+  assert(list->length == 3);
+  assert(* (int *) list->first->element == 5);
+  assert(* (int *) list->last->element == 3);
+  assert(new_list->length == 0);
+  assert(new_list->first == NULL);
+  assert(new_list->last == NULL);
   printf("passed...\n");
 
   int b = 3;
-  printf("\tShould remove all mathces in new list\n");
+  printf("\tShould remove all mathces in list\n");
   new_list = remove_all_occurrences(list, &b, compare_int);
-  assert(new_list->length == 1);
-  assert(* (int *) new_list->first->element == 5);
-  assert(* (int *) new_list->last->element == 5);
+  printf("-->%d\n", list->length);
+  assert(list->length == 1);
+  assert(* (int *) list->first->element == 5);
+  assert(* (int *) list->last->element == 5);
+  assert(new_list->length == 2);
+  assert(* (int *) new_list->first->element == 3);
+  assert(* (int *) new_list->last->element == 3);
   printf("passed...\n");
 }
 
