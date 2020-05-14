@@ -172,7 +172,7 @@ Element remove_at(List_ptr list, int position) {
   Node_ptr temp = above_node->next;
   above_node->next = temp->next;
   list->length--;
-  return temp;
+  return temp->element;
 }
 
 Element remove_first_occurrence(List_ptr list, Element element, Matcher matcher) {
@@ -189,7 +189,7 @@ Element remove_first_occurrence(List_ptr list, Element element, Matcher matcher)
       Node_ptr temp = p_walk->next;
       p_walk->next = temp->next;
       list->length--;
-      return temp;
+      return temp->element;
     }
     p_walk = p_walk->next;
   }

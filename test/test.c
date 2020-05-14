@@ -215,8 +215,16 @@ void test_remove_at(void) {
 
   int a = 5;
   int b = 3;
+  int c = 2;
   add_to_start(list,&a);
+  add_to_start(list,&c);
   add_to_start(list,&b);
+
+  printf("\t should be able to remove one value from middle\n");
+  assert(*(int *) remove_at(list,1) == 2);
+  assert(list->length == 2);
+  assert(*(int *) list->first->element == 3);
+  printf("passed...\n");
 
   printf("\t should be able to remove one value from a given valid position\n");
   assert(*(int *) remove_at(list,1) == 5);
