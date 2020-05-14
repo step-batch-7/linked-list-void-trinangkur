@@ -238,7 +238,7 @@ void test_remove_first_occurrence(void) {
   add_to_list(list, &b);
   printf("\tShould remove first match only\n");
   int c = 5;
-  assert(remove_first_occurrence(list, &c, compare_int));
+  assert(*(int *) remove_first_occurrence(list, &c, compare_int) == 5);
   assert(list->length== 1);
   assert(*(int *) list->first->element == 5);
   assert(*(int *) list->last->element == 5);
@@ -254,10 +254,39 @@ void test_remove_first_occurrence(void) {
 
   printf("\tShould remove all elements while matching with only element in list\n");
   int e = 5;
-  assert(remove_first_occurrence(list, &e, compare_int));
+  assert(*(int *) remove_first_occurrence(list, &e, compare_int) == 5);
   assert(list->length == 0);
   assert(list->first == NULL);
   assert(list->last == NULL);
+  printf("passed...\n");
+}
+
+void test_remove_all_occurrence(void) {
+  printf("\ntesting remove_all_occurrences\n");
+  List_ptr list = create_list();
+  int x = 5;
+  int y = 3;
+  int z = 3;
+  add_to_list(list, &x);
+  add_to_list(list, &y);
+  add_to_list(list, &z);
+
+  printf("\tShould get every element if nothing mathes\n");
+
+  int a = 0;
+
+  List_ptr new_list = remove_all_occurrences(list, &a, compare_int);
+  assert(new_list->length == 3);
+  assert(* (int *) new_list->first->element == 5);
+  assert(* (int *) new_list->last->element == 3);
+  printf("passed...\n");
+
+  int b = 3;
+  printf("\tShould remove all mathces in new list\n");
+  new_list = remove_all_occurrences(list, &b, compare_int);
+  assert(new_list->length == 1);
+  assert(* (int *) new_list->first->element == 5);
+  assert(* (int *) new_list->last->element == 5);
   printf("passed...\n");
 }
 
@@ -274,5 +303,6 @@ int main(void)
   test_remove_from_end();
   test_remove_at();
   test_remove_first_occurrence();
+  test_remove_all_occurrence();
   return 0;
 }
