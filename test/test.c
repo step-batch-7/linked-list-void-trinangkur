@@ -290,6 +290,23 @@ void test_remove_all_occurrence(void) {
   printf("passed...\n");
 }
 
+void test_add_unique(void) {
+  printf("\ntesting add_unique\n");
+  List_ptr list = create_list();
+  printf("\t should have one element while list is empty and value is inserted\n");
+  int a = 5;
+  assert(add_unique(list,&a,compare_int));
+  assert(list->length == 1);
+  assert(* (int *) list->first->element == 5);
+  printf("passed...\n");
+
+  printf("\t should not add the same value which has been inserted\n");
+  int b = 5;
+  assert(add_unique(list,&b,compare_int) == 0);
+  assert(list->length == 1);
+  printf("passed...\n");
+}
+
 int main(void)
 {
   test_add_to_list();
@@ -304,5 +321,6 @@ int main(void)
   test_remove_at();
   test_remove_first_occurrence();
   test_remove_all_occurrence();
+  test_add_unique();
   return 0;
 }
