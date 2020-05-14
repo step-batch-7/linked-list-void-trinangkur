@@ -3,6 +3,12 @@
 #include <assert.h>
 #include "../linkedlist.h"
 
+void *increment (void *a) {
+  int *b = malloc(sizeof(int));
+  *b = *((int *)a) + 1;
+  return b;
+}
+
 void test_add_to_list(void) {
   printf("\ntesting add_to_end\n");
   List_ptr list = create_list();
@@ -88,8 +94,27 @@ void test_reverse(void) {
   assert(another->length == 2);
   printf("passed...\n");
 
-  printf("\t should have last element as value 6");
+  printf("\t should have last element as value 6\n");
   assert(*(int *) another->first->element == 6);
+  printf("passed...\n");
+}
+
+void test_map(void) {
+  printf("\ntesting reverse\n");
+  List_ptr list = create_list();
+  int a = 5;
+  int b = 3;
+  add_to_list(list, &a);
+  add_to_list(list, &b);
+  List_ptr another_list = map(list,increment);
+  printf("\t should get an linkedlist with all values incremented by one\n");
+  Node_ptr p_walk = list->first;
+  Node_ptr another_p_walk = another_list->first;
+  while (p_walk != NULL) {
+    assert((*(int *)p_walk->element) + 1 == (*(int *) another_p_walk->element));
+    p_walk = p_walk->next;
+    another_p_walk = another_p_walk->next;
+  }
   printf("passed...\n");
 }
 
@@ -99,5 +124,6 @@ int main(void)
   test_add_to_start();
   test_insert_at();
   test_reverse();
+  test_map();
   return 0;
 }
