@@ -139,3 +139,20 @@ Element remove_from_start(List_ptr list) {
   }
   return temp->element;
 }
+
+Element remove_from_end(List_ptr list) {
+  if(list->length == 0) {
+    return NULL;
+  }
+
+  list->length--;
+  Node_ptr last = list->last;
+  if(list->length == 0) {
+    list->first = NULL;
+    list->last = NULL;
+  } else {
+    list->last = get_node(list, list->length - 1);
+    list->last->next = NULL;
+  }
+  return last->element;
+}

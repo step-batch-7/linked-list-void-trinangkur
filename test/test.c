@@ -179,7 +179,26 @@ void test_remove_from_start(void) {
   printf("\t should be able to remove one value from start while list is not empty\n");
   assert(*(int *) remove_from_start(list) == 3);
   assert(list->length == 1);
-  assert(* (int *)list->first->element == 5);
+  assert(* (int *) list->first->element == 5);
+  printf("passed...\n");
+}
+
+void test_remove_from_end(void) {
+  printf("\ntesting remove_from_end\n");
+  List_ptr list = create_list();
+  printf("\t should not be able to remove anything while list is empty\n");
+  assert(remove_from_end(list) == NULL);
+  printf("passed...\n");
+
+  int a = 5;
+  int b = 3;
+  add_to_start(list,&a);
+  add_to_start(list,&b);
+
+  printf("\t should be able to remove one value from end while list is not empty\n");
+  assert(*(int *) remove_from_end(list)== 5);
+  assert(list->length == 1);
+  assert(*(int *) list->first->element == 3);
   printf("passed...\n");
 }
 
@@ -193,5 +212,6 @@ int main(void)
   test_filter();
   test_reduce();
   test_remove_from_start();
+  test_remove_from_end();
   return 0;
 }
