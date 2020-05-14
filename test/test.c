@@ -75,10 +75,29 @@ void test_insert_at(void){
   printf("passed...\n");
 }
 
+void test_reverse(void) {
+  printf("\ntesting reverse\n");
+  List_ptr list = create_list();
+  int a = 5;
+  add_to_list(list, &a);
+  int b = 6;
+  add_to_list(list, &b);
+  printf("\t should have first element as value 6 and count as 2\n");
+  List_ptr another = reverse(list);
+  assert(*(int *) another->first->element == 6);
+  assert(another->length == 2);
+  printf("passed...\n");
+
+  printf("\t should have last element as value 6");
+  assert(*(int *) another->first->element == 6);
+  printf("passed...\n");
+}
+
 int main(void)
 {
   test_add_to_list();
   test_add_to_start();
   test_insert_at();
+  test_reverse();
   return 0;
 }
