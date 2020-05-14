@@ -218,6 +218,7 @@ Status add_unique(List_ptr list, Element element, Matcher matcher) {
     if (matcher(p_walk->element, element)) {
       return Failure;
     }
+  p_walk = p_walk->next;
   }
   return add_to_list(list,element);
 }
