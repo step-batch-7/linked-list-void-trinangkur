@@ -156,3 +156,21 @@ Element remove_from_end(List_ptr list) {
   }
   return last->element;
 }
+
+Element remove_at(List_ptr list, int position) {
+  if(position >= list->length || position < 0) {
+    return NULL;
+  }
+  if(position == 0) {
+    return remove_from_start(list);
+  }
+  if (position == list->length - 1) {
+    return remove_from_end(list);
+  }
+
+  Node_ptr above_node = get_node(list,position - 1);
+  Node_ptr temp = above_node->next;
+  above_node->next = temp->next;
+  list->length--;
+  return temp;
+}
