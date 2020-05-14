@@ -13,6 +13,12 @@ Status is_less_than_5 (void *a) {
   return *(int *)a < 5;
 }
 
+void * sum_using_ref(void *a, void *b) {
+  int *c = malloc(sizeof(int));
+  *c = *(int *) a + *(int *)b;
+  return c;
+}
+
 void test_add_to_list(void) {
   printf("\ntesting add_to_end\n");
   List_ptr list = create_list();
@@ -140,6 +146,25 @@ void test_filter(void) {
   printf("passed...\n");
 }
 
+void test_reduce(void) {
+  printf("\ntesting reducer\n");
+  List_ptr list = create_list();
+  int d = 0;
+  printf("\t should return the initial context for an empty linkedlist\n");
+  Element sum = reduce(list, &d, sum_using_ref);
+  assert(*(int *) sum == 0);
+  printf("passed...\n");
+  int a = 5;
+  int b = 3;
+  add_to_list(list, &a);
+  add_to_list(list, &b);
+  int c = 0;
+  printf("\t should reduce for given list and a reducer\n");
+  sum = reduce(list, &c, sum_using_ref);
+  assert(*(int *) sum == 8);
+  printf("passed...\n");
+}
+
 int main(void)
 {
   test_add_to_list();
@@ -148,5 +173,6 @@ int main(void)
   test_reverse();
   test_map();
   test_filter();
+  test_reduce();
   return 0;
 }
